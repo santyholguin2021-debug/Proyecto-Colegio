@@ -1,0 +1,14 @@
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\bin\Debug\net10.0\Colegio.exe
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\bin\Debug\net10.0\Colegio.deps.json
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\bin\Debug\net10.0\Colegio.runtimeconfig.json
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\bin\Debug\net10.0\Colegio.dll
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\bin\Debug\net10.0\Colegio.pdb
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.AssemblyInfoInputs.cache
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.AssemblyInfo.cs
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.csproj.CoreCompileInputs.cache
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.dll
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\refint\Colegio.dll
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.pdb
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\Colegio.genruntimeconfig.cache
+C:\Users\Propietario\OneDrive\Escritorio\proyectoColegio\Colegio\obj\Debug\net10.0\ref\Colegio.dll
