@@ -64,7 +64,7 @@ class Program
 
     static void RegistrarEstudiante()
     {
-        Console.WriteLine("\n--- Nuevo Estudiante ---");
+        Console.WriteLine("\n===== Nuevo Estudiante =====");
 
         Console.Write("Nombre: ");
         string nombre = Console.ReadLine();
@@ -131,7 +131,7 @@ class Program
 
         do
         {
-            Console.WriteLine($"\n--- Materias de {estudiante.nombre} ---");
+            Console.WriteLine($"\n===== Materias de {estudiante.nombre} =====");
             Console.WriteLine("1. Agregar materia");
             Console.WriteLine("2. Ver materias");
             Console.WriteLine("3. Cambiar nota");
