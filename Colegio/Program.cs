@@ -2,7 +2,7 @@
 
 class Program
 {
-    static ListaEnlazadaEstudiantes sistema = new ListaEnlazadaEstudiantes();
+    static ListaEstudiantes sistema = new ListaEstudiantes();
 
     static void Main(string[] args)
     {
@@ -23,8 +23,7 @@ class Program
             Console.WriteLine("5. Administrar materias");
             Console.WriteLine("6. Salir");
 
-            Console.Write("Seleccione una opción: ");
-            opcion = Convert.ToInt32(Console.ReadLine());
+            opcion = LeerEntero("Seleccione una opción: ");
 
             switch (opcion)
             {
@@ -66,28 +65,24 @@ class Program
     {
         Console.WriteLine("\n===== Nuevo Estudiante =====");
 
-        Console.Write("Nombre: ");
-        string nombre = Console.ReadLine();
-
-        Console.Write("Apellido: ");
-        string apellido = Console.ReadLine();
-
-        Console.Write("Dirección: ");
-        string direccion = Console.ReadLine();
-
-        Console.Write("Celular: ");
-        string celular = Console.ReadLine();
-
-        Console.Write("Email: ");
-        string email = Console.ReadLine();
+        string nombre = LeerTexto("Nombre: ");
+        string apellido = LeerTexto("Apellido: ");
+        string direccion = LeerTexto("Dirección: ");
+        string celular = LeerTexto("Celular: ");
+        string email = LeerTexto("Email: ");
 
         sistema.Agregar(nombre, apellido, direccion, celular, email);
     }
 
     static void BuscarEstudiante()
     {
-        Console.Write("Ingrese código: ");
-        int codigo = Convert.ToInt32(Console.ReadLine());
+        if (sistema.EstaVacio())
+        {
+            Console.WriteLine("Vacío, agrega algo...");
+            return;
+        }
+
+        int codigo = LeerEntero("Ingrese código: ");
 
         var estudiante = sistema.Buscar(codigo);
 
@@ -105,8 +100,7 @@ class Program
 
     static void EliminarEstudiante()
     {
-        Console.Write("Código a eliminar: ");
-        int codigo = Convert.ToInt32(Console.ReadLine());
+        int codigo = LeerEntero("Código a eliminar: ");
 
         sistema.Eliminar(codigo);
         Console.WriteLine("Proceso finalizado.");
@@ -116,8 +110,7 @@ class Program
 
     static void MenuMaterias()
     {
-        Console.Write("Ingrese código del estudiante: ");
-        int codigo = Convert.ToInt32(Console.ReadLine());
+        int codigo = LeerEntero("Ingrese código del estudiante: ");
 
         var estudiante = sistema.Buscar(codigo);
 
@@ -138,8 +131,7 @@ class Program
             Console.WriteLine("4. Quitar materia");
             Console.WriteLine("5. Volver");
 
-            Console.Write("Opción: ");
-            opcion = Convert.ToInt32(Console.ReadLine());
+            opcion = LeerEntero("Opción: ");
 
             switch (opcion)
             {
@@ -152,11 +144,29 @@ class Program
                     break;
 
                 case 3:
+                    if (estudiante.materias.EstaVacio())
+                    {
+                        Console.WriteLine("Vacío, agrega algo...");
+                        break;
+                    }
                     ModificarNota(estudiante);
                     break;
 
                 case 4:
+                    if (estudiante.materias.EstaVacio())
+                    {
+                        Console.WriteLine("Vacío, agrega algo...");
+                        break;
+                    }
                     EliminarMateria(estudiante);
+                    break;
+
+                case 5:
+                    Console.WriteLine("Volviendo...");
+                    break;
+
+                default:
+                    Console.WriteLine("Opción inválida");
                     break;
             }
 
@@ -165,31 +175,62 @@ class Program
 
     static void AgregarMateria(NodoEstudiante est)
     {
-        Console.Write("Nombre materia: ");
-        string nombre = Console.ReadLine();
-
-        Console.Write("Nota: ");
-        double nota = Convert.ToDouble(Console.ReadLine());
+        string nombre = LeerTexto("Nombre materia: ");
+        double nota = LeerDouble("Nota: ");
 
         est.materias.Agregar(nombre, nota);
     }
 
     static void ModificarNota(NodoEstudiante est)
     {
-        Console.Write("Materia a modificar: ");
-        string nombre = Console.ReadLine();
-
-        Console.Write("Nueva nota: ");
-        double nota = Convert.ToDouble(Console.ReadLine());
+        string nombre = LeerTexto("Materia a modificar: ");
+        double nota = LeerDouble("Nueva nota: ");
 
         est.materias.EditarNota(nombre, nota);
     }
 
     static void EliminarMateria(NodoEstudiante est)
     {
-        Console.Write("Materia a eliminar: ");
-        string nombre = Console.ReadLine();
+        string nombre = LeerTexto("Materia a eliminar: ");
 
         est.materias.Eliminar(nombre);
+    }
+
+    static string LeerTexto(string mensaje)
+    {
+        while (true)
+        {
+            Console.Write(mensaje);
+            string? entrada = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(entrada))
+                return entrada.Trim();
+            Console.WriteLine("Entrada inválida. Intente de nuevo.");
+        }
+    }
+
+    static int LeerEntero(string mensaje)
+    {
+        int valor;
+        while (true)
+        {
+            Console.Write(mensaje);
+            string? entrada = Console.ReadLine();
+            if (int.TryParse(entrada, out valor))
+                return valor;
+            Console.WriteLine("Entrada inválida. Intente de nuevo.");
+        }
+    }
+
+    static double LeerDouble(string mensaje)
+    {
+        double valor;
+        while (true)
+        {
+            Console.Write(mensaje);
+            string? entrada = Console.ReadLine();
+            if (double.TryParse(entrada, out valor))
+                return valor;
+            Console.WriteLine("Entrada inválida. Intente de nuevo.");
+        }
     }
 }
