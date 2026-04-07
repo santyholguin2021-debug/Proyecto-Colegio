@@ -2,7 +2,7 @@
 
 class Program
 {
-    static ListaEstudiantes sistema = new ListaEstudiantes();
+    static ListaEnlazadaEstudiantes sistema = new ListaEnlazadaEstudiantes();
 
     static void Main(string[] args)
     {
@@ -68,7 +68,7 @@ class Program
         string nombre = LeerTexto("Nombre: ");
         string apellido = LeerTexto("Apellido: ");
         string direccion = LeerTexto("Dirección: ");
-        string celular = LeerTexto("Celular: ");
+        string celular = LeerTelefono("Celular: ");
         string email = LeerTexto("Email: ");
 
         sistema.Agregar(nombre, apellido, direccion, celular, email);
@@ -82,15 +82,15 @@ class Program
             return;
         }
 
-        int codigo = LeerEntero("Ingrese código: ");
+        int id = LeerEntero("Ingrese id: ");
 
-        var estudiante = sistema.Buscar(codigo);
+        var estudiante = sistema.Buscar(id);
 
         if (estudiante != null)
         {
             Console.WriteLine("\nEstudiante encontrado:");
-            Console.WriteLine($"{estudiante.nombre} {estudiante.apellido}");
-            Console.WriteLine($"Email: {estudiante.email}");
+            Console.WriteLine($"{estudiante.Nombre} {estudiante.Apellido}");
+            Console.WriteLine($"Email: {estudiante.Email}");
         }
         else
         {
@@ -100,19 +100,19 @@ class Program
 
     static void EliminarEstudiante()
     {
-        int codigo = LeerEntero("Código a eliminar: ");
+        int id = LeerEntero("Id a eliminar: ");
 
-        sistema.Eliminar(codigo);
-        Console.WriteLine("Proceso finalizado.");
+        sistema.Eliminar(id);
+        Console.WriteLine("Estudiante eliminado exitosamente.");
     }
 
     // FUNCIONES DE MATERIAS
 
     static void MenuMaterias()
     {
-        int codigo = LeerEntero("Ingrese código del estudiante: ");
+        int id = LeerEntero("Ingrese id del estudiante: ");
 
-        var estudiante = sistema.Buscar(codigo);
+        var estudiante = sistema.Buscar(id);
 
         if (estudiante == null)
         {
@@ -124,7 +124,7 @@ class Program
 
         do
         {
-            Console.WriteLine($"\n===== Materias de {estudiante.nombre} =====");
+            Console.WriteLine($"\n===== Materias de {estudiante.Nombre} =====");
             Console.WriteLine("1. Agregar materia");
             Console.WriteLine("2. Ver materias");
             Console.WriteLine("3. Cambiar nota");
@@ -173,27 +173,35 @@ class Program
         } while (opcion != 5);
     }
 
-    static void AgregarMateria(NodoEstudiante est)
+    static void AgregarMateria(Estudiante est)
     {
         string nombre = LeerTexto("Nombre materia: ");
-        double nota = LeerDouble("Nota: ");
+        double nota = LeerDoubleValidado("Nota (0 a 5): ");
 
-        est.materias.Agregar(nombre, nota);
+        if (!est.materias.Agregar(nombre, nota))
+        {
+            Console.WriteLine("Error: Esta materia ya está registrada para este estudiante.");
+        }
+        else
+        {
+            Console.WriteLine("Materia agregada exitosamente.");
+        }
     }
 
-    static void ModificarNota(NodoEstudiante est)
+    static void ModificarNota(Estudiante est)
     {
         string nombre = LeerTexto("Materia a modificar: ");
-        double nota = LeerDouble("Nueva nota: ");
+        double nota = LeerDoubleValidado("Nueva nota (0 a 5): ");
 
         est.materias.EditarNota(nombre, nota);
     }
 
-    static void EliminarMateria(NodoEstudiante est)
+    static void EliminarMateria(Estudiante est)
     {
         string nombre = LeerTexto("Materia a eliminar: ");
 
         est.materias.Eliminar(nombre);
+        Console.WriteLine("Materia eliminada exitosamente.");
     }
 
     static string LeerTexto(string mensaje)
@@ -231,6 +239,31 @@ class Program
             if (double.TryParse(entrada, out valor))
                 return valor;
             Console.WriteLine("Entrada inválida. Intente de nuevo.");
+        }
+    }
+
+    static double LeerDoubleValidado(string mensaje)
+    {
+        double valor;
+        while (true)
+        {
+            Console.Write(mensaje);
+            string? entrada = Console.ReadLine();
+            if (double.TryParse(entrada, out valor) && valor >= 0 && valor <= 5)
+                return valor;
+            Console.WriteLine("Nota inválida. Ingrese un valor entre 0 y 5.");
+        }
+    }
+
+    static string LeerTelefono(string mensaje)
+    {
+        while (true)
+        {
+            Console.Write(mensaje);
+            string? entrada = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(entrada) && entrada.All(char.IsDigit))
+                return entrada.Trim();
+            Console.WriteLine("Teléfono inválido. Ingrese solo números sin espacios.");
         }
     }
 }

@@ -3,6 +3,7 @@
         private Nodo<Estudiante>? cabeza;
         private Nodo<Estudiante>? ultimo;
         private int cantidad;
+        private int idAutoIncrementable = 1;
 
         public ListaEnlazadaEstudiantes()
         {
@@ -12,6 +13,19 @@
         }
 
         public int Cantidad => cantidad;
+
+        // Verificar si la lista está vacía
+        public bool EstaVacio()
+        {
+            return cantidad == 0;
+        }
+
+        // Agregar estudiante con parámetros individuales
+        public void Agregar(string nombre, string apellido, string direccion, string celular, string email)
+        {
+            Estudiante nuevoEstudiante = new Estudiante(idAutoIncrementable++, nombre, apellido, direccion, celular, email);
+            Agregar(nuevoEstudiante);
+        }
 
         // Agregar estudiante al final
         public void Agregar(Estudiante estudiante)
@@ -31,12 +45,12 @@
         }
 
         // Buscar estudiante por código
-        public Estudiante? Buscar(int codigo)
+        public Estudiante? Buscar(int id)
         {
             Nodo<Estudiante>? actual = cabeza;
             while (actual != null)
             {
-                if (actual.Valor != null && actual.Valor.Codigo == codigo)
+                if (actual.Valor != null && actual.Valor.Id == id)
                 {
                     return actual.Valor;
                 }
@@ -46,8 +60,13 @@
         }
 
         // Listar estudiantes
-        public void Imprimir()
+        public void Listar()
         {
+            if (EstaVacio())
+            {
+                Console.WriteLine("No hay estudiantes registrados.");
+                return;
+            }
             Nodo<Estudiante>? actual = cabeza;
             while (actual != null)
             {
@@ -57,11 +76,11 @@
         }
 
         // Eliminar estudiante por código
-        public bool Eliminar(int codigo)
+        public bool Eliminar(int id)
         {
             if (cabeza == null) return false;
 
-            if (cabeza.Valor != null && cabeza.Valor.Codigo == codigo)
+            if (cabeza.Valor != null && cabeza.Valor.Id == id)
             {
                 cabeza = cabeza.Siguiente;
                 cantidad--;
@@ -71,7 +90,7 @@
             Nodo<Estudiante>? actual = cabeza;
             while (actual?.Siguiente != null)
             {
-                if (actual.Siguiente.Valor != null && actual.Siguiente.Valor.Codigo == codigo)
+                if (actual.Siguiente.Valor != null && actual.Siguiente.Valor.Id == id)
                 {
                     actual.Siguiente = actual.Siguiente.Siguiente;
                     cantidad--;
